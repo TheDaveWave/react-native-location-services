@@ -1,8 +1,8 @@
 {
   "expo": {
     "entryPoint": "./src/App.js",
-    "name": "template",
-    "slug": "template",
+    "name": "Location Test",
+    "slug": "Location Test",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,7 +19,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "The Location Test App uses your location to test out location tracking",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "The Location Test App will use your location to test out location tracking",
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +37,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins" : ["expo-media-library"]
   }
 }
