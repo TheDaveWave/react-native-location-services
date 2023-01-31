@@ -2,7 +2,7 @@
   "expo": {
     "entryPoint": "./src/App.js",
     "name": "Location Test",
-    "slug": "Location Test",
+    "slug": "template",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -26,18 +26,33 @@
         "UIBackgroundModes": [
           "location",
           "fetch"
-        ]
-      }
+        ],
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos"
+      },
+      "bundleIdentifier": "com.example.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "package": "com.example.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins" : ["expo-media-library"]
+    "plugins": [
+      "expo-media-library"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a2382cf9-9c66-4ad5-a5bb-1924ee888d46"
+      }
+    }
   }
 }
