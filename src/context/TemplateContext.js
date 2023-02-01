@@ -46,7 +46,8 @@ export function TemplateProvider({ children }) {
   const [location, setLocation] = useState(null);
   const [coords, setCoords] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const locations = [];
+  const [previousLocation, setPreviousLocation] = useState({});
+  const [userLocations, setUserLocations] = useState([]);
 
   async function getLocation() {
     await Location.getCurrentPositionAsync()
@@ -57,6 +58,11 @@ export function TemplateProvider({ children }) {
           longitude: res.coords.longitude,
         };
         setCoords(location);
+        setPreviousLocation(res);
+        setUserLocations([
+          ...userLocations,
+          res
+        ]);
         Location.reverseGeocodeAsync(location)
           .then((res) => {
             console.log(res[0]);
@@ -79,6 +85,23 @@ export function TemplateProvider({ children }) {
         return;
       }
       console.log("Received new locations", locations);
+      let recentLocation = {
+        latitude: locations[0].coords.latitude,
+        longitude: locations[0].coords.longitude,
+      };
+      if (
+        previousLocation.coords.latitude === recentLocation.latitude &&
+        previousLocation.coords.longitude === recentLocation.longitude
+      ) {
+        setPreviousLocation(locations[0]);
+        console.log("set new previous location");
+      } else {
+        setPreviousLocation(recentLocation);
+        console.log(previousLocation);
+        setUserLocations([...userLocations, locations[0]]);
+        console.log("updated user locations");
+      }
+      console.log("user locations:", userLocations);
     }
   );
 
@@ -86,10 +109,12 @@ export function TemplateProvider({ children }) {
     await Location.startLocationUpdatesAsync("LOCATION_TRACKING", {
       deferredUpdatesInterval: 2000,
     });
+    console.log("Started tracking");
   }
 
   async function stopTracking() {
     await Location.stopLocationUpdatesAsync("LOCATION_TRACKING");
+    console.log("Stopped tracking.");
   }
 
   // useEffect(() => {
